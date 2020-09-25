@@ -23,7 +23,39 @@ def home():
     #mTeam what moves were made
     #mRoster news
     #mBoxscor complex but maybe can get the data from here
-    r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "mBoxscore"})
+    r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "mMatchup"})
    
     d = r.json()
+    
+    #for i in d:
+    #    print(i)
+    #print(d["schedule"])
+    #for i in d["schedule"]:
+    #    print(i)
+    #for i in d["schedule"][12]:
+    #    print(i)
+    '''
+    away
+    home
+    id
+    matchupPeriodId
+    winner
+    '''
+    #print(d["schedule"][12]["home"]["rosterForCurrentScoringPeriod"]["entries"])
+    for i in d["schedule"][12]["home"]["rosterForCurrentScoringPeriod"]["entries"]:
+        print(i["playerPoolEntry"]["player"]["fullName"])
+    #0-11 are nothing prob week data
+    '''
+    mMatchup
+    draftDetail-nope
+    gameId-nope
+    id-nope
+    schedule - lot #this is were the points are but it big
+    scoringPeriodId - what week is it
+    seasonId -nope
+    segmentId -nope
+    status - nitch info
+    teams
+    '''
     return(d)
+  
