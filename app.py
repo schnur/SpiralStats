@@ -22,7 +22,7 @@ def home():
     #url="https://fantasy.espn.com/apis/v3/games/ffl/seasons/2020/segments/0/leagues/21251?view=mMatchup"
     #mTeam what moves were made
     #mRoster news
-    #mBoxscor complex but maybe can get the data from here
+    #mBoxscore complex but maybe can get the data from here
     r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "mMatchup"})
    
     d = r.json()
@@ -58,4 +58,13 @@ def home():
     teams
     '''
     return(d)
+  
+  #what we need for each player
+    #name, points, team/
+
+  #jobs
+  #espn data-ryan
+  #nfl data-Arya
+  # dream team -shamar
+  # find out how to use cookies -colton
   
