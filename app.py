@@ -42,8 +42,8 @@ def home():
     winner
     '''
     #print(d["schedule"][12]["home"]["rosterForCurrentScoringPeriod"]["entries"])
-    for i in d["schedule"][12]["home"]["rosterForCurrentScoringPeriod"]["entries"]:
-        print(i["playerPoolEntry"]["player"]["fullName"])
+    #for i in d["schedule"][12]["home"]["rosterForCurrentScoringPeriod"]["entries"]:
+    #    print(i["playerPoolEntry"]["player"]["fullName"])
     #0-11 are nothing prob week data
     '''
     mMatchup
@@ -58,4 +58,4 @@ def home():
     teams
     '''
     return(d)
-  
+  # testing testing
