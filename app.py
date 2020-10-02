@@ -1,5 +1,4 @@
-from flask import Flask
-import requests
+from flask import Flask, requests, make_response
 import json
 app=Flask(__name__)
 
@@ -22,7 +21,7 @@ def home():
     #url="https://fantasy.espn.com/apis/v3/games/ffl/seasons/2020/segments/0/leagues/21251?view=mMatchup"
     #mTeam what moves were made
     #mRoster news
-    #mBoxscore complex but maybe can get the data from here
+    #mBoxscor complex but maybe can get the data from here
     r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "mMatchup"})
    
     d = r.json()
@@ -58,14 +57,20 @@ def home():
     teams
     '''
     return(d)
-  
-  #what we need for each player
-    #name, points, team/
-
-  #jobs
-  #espn data-ryan
-  #nfl data-Arya
-  # dream team -shamar
-  # find out how to use cookies -colton
-  
   # testing testing
+
+
+  def cookies():
+    res = make_response("Cookies", 200)
+    res.set_cookie("testcookie",
+     value="testing",
+     max_age=10.
+     path = request.path,
+     domain = None,
+     secure = False,
+     httponly = False,
+     samesite = False)
+
+    cookietest = cookies.get("testing")
+
+    return res
