@@ -91,3 +91,19 @@ def home():
   #what we need for each player
     #name, points, team/
 
+  #jobs
+  #espn data-ryan
+  #nfl data-Arya
+  # dream team -shamar
+  # find out how to use cookies -colton
+  
+  # testing testing
+"""
+Ryan
+
+"""
+
+"""
+Comment - Shamar
+"""
+#hello guys -Arya
