@@ -48,7 +48,7 @@ def home():
         for i in d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["home"]["rosterForCurrentScoringPeriod"]["entries"]:
             print(i["playerPoolEntry"]["player"]["fullName"], end="")
             print("  "+str(i["playerPoolEntry"]["appliedStatTotal"]), end="")
-            if(i["lineupSlotId"]!=20):
+            if(i["lineupSlotId"]!=20 and i["lineupSlotId"]!=21): #20 for bench 21 for IR
                 totalHome+=i["playerPoolEntry"]["appliedStatTotal"]
                 print(" active")
             else:
@@ -61,7 +61,7 @@ def home():
         for i in d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["away"]["rosterForCurrentScoringPeriod"]["entries"]:
             print(i["playerPoolEntry"]["player"]["fullName"], end="")
             print("  "+str(i["playerPoolEntry"]["appliedStatTotal"]), end="")
-            if(i["lineupSlotId"]!=20):
+            if(i["lineupSlotId"]!=20 and i["lineupSlotId"]!=21):
                 totalAway+=i["playerPoolEntry"]["appliedStatTotal"]
                 print(" active")
             else:
