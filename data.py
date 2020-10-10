@@ -10,6 +10,7 @@ lg = gm.to_league('399.l.1201487')
 
 with open('positions.json', 'r') as positions_file:
     positions = json.load(positions_file)
+
 with open('free_agents.json', 'r') as free_agents_file:
     free_agents = json.load(free_agents_file)
 
@@ -30,37 +31,8 @@ for position in positions:
             else:
                 print(player["name"], "already on the list.")
 
-        
 
-# positions = lg.positions()
-# for position in player_details:
-# players = lg.free_agents('QB')
-# parsed_player_data = []
-# for player in players:
-#     player_details = lg.player_details(player["name"])[0]
-#     parsed_player_data.append({
-#         "name" : player_details["name"]["full"],
-#         "team" : player_details["editorial_team_full_name"],
-#         "position" : player_details["primary_position"]
-#   })
 
- 
-# with open('free_agents.json', 'r') as json_file:
-#     data = json.load(json_file)
-
-# positions = lg.positions()
-# # for position in positions:
-# #     if not(position in data) and position != "W/R/T":
-# #         data[position] = []
-# #         players = lg.free_agents(position)
-# #         for player in players:
-# #             data[position].append(player)
-# #         with open('free_agents.json', 'w') as json_file:
-# #             json.dump(data, json_file)
-# #     print("parsed all", position)
-
-# with open('positions.json', 'w') as json_file:
-#     json.dump(positions, json_file)
 
 # {
 #     'QB' : [
@@ -82,10 +54,3 @@ for position in positions:
 #     },
 # }
 
-# def get_player_data():
-#     return parsed_player_data
-
-
-# drew_brees_details = lg.player_details('Aaron Rodgers')
-# webbrowser.open(drew_brees_details[0]['headshot']['url'])
-# print(drew_brees_details)
