@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title> Players </title>
+    </head>
+    <body>
+        {% for position, value in positions.items() %}
+        <h1> {{ position }} </h1>
+        <ul>
+            {% for player in free_agents[position] %}
+            <li> 
+                {{ player.name }} - 
+                {% if free_agent_details[player.name] %}
+                    <a href="{{ free_agent_details[player.name].headshot.url }}">Click Here to See Image</a>
+                {% else %}
+                    Player Data Not Yet Retrieved
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+	    {% endfor %}
+    </body>
+</html>
