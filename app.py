@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 app = Flask(__name__)
 
@@ -17,7 +17,16 @@ with open('free_agent_details.json', 'r') as free_agent_details_file:
 
 @app.route('/')
 def main():
-    return render_template('index.html', positions=positions, free_agents = free_agents, free_agent_details = free_agent_details, waivers=waivers) 
+    return render_template('players.html', positions=positions, free_agents = free_agents, free_agent_details = free_agent_details, waivers=waivers) 
+
+@app.route('/players')
+def players():
+    player_name = request.args.get('player_name')
+    player = free_agent_details[player_name]
+    if player:
+        return render_template('player.html', player = player)
+    else:
+        return "Player Data Not Found"
     
 if __name__ == '__main__':
     app.run()
