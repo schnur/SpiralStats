@@ -99,11 +99,14 @@ def home():
   
   # testing testing
 """
-Ryan
-
+TeamData:{Teamname1: {players:[{name:???, STR
+                                proTeam:???, STR or int
+                                position:???, STR
+                                active:???, bool
+                                points:???  double
+                                injured:??? bool
+                                fantasyteam: ??? int
+                                ?img
+                                gameTime: ???
+                                 },,,,]} ,Teamname2: ...}
 """
-
-"""
-Comment - Shamar
-"""
-#hello guys -Arya
