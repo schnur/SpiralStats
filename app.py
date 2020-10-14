@@ -7,11 +7,11 @@ def main():
     return render_template('index.html') 
 
 @app.route('/signup')
-def players():
+def signup():
     return render_template('signup.html') 
     
 @app.route('/login')
-def players():
+def login():
     return render_template('login.html') 
 
 if __name__ == '__main__':
