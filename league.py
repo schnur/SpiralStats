@@ -11,7 +11,7 @@ with open('teams.json', 'r') as f:
     teams = json.load(f)
 
 
-team = lg.to_team('399.l.1201487.t.1')
+team = lg.to_team('399.l.1201487.t.2')
 team.add_player(24788)
 roster = team.roster()
 
