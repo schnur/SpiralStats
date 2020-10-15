@@ -38,41 +38,83 @@ def home():
 
 
     r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "mMatchup"})
-   
     d = r.json()
+    with open('free_agent_details.json', 'r') as free_agent_details_file:
+        free_agent_details = json.load(free_agent_details_file)
     
+    
+    TeamData={}
 
     for j in range(int(len(idToTeamName)/2)):
-        print(idToTeamName[d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["home"]["rosterForCurrentScoringPeriod"]["entries"][0]["playerPoolEntry"]["onTeamId"]])
+        name1=idToTeamName[d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["home"]["rosterForCurrentScoringPeriod"]["entries"][0]["playerPoolEntry"]["onTeamId"]]
+        print(name1)
+
+        TeamData[name1]={"players":[]}
+
+
         totalHome=0
+
         for i in d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["home"]["rosterForCurrentScoringPeriod"]["entries"]:
             print(i["playerPoolEntry"]["player"]["fullName"], end="")
             print("  "+str(i["playerPoolEntry"]["appliedStatTotal"]), end="")
+            activeSwitch=False
             if(i["lineupSlotId"]!=20 and i["lineupSlotId"]!=21): #20 for bench 21 for IR
                 totalHome+=i["playerPoolEntry"]["appliedStatTotal"]
                 print(" active")
+                activeSwitch=True
             else:
                 print()
+            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "\'" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
+                TeamData[name1]["players"].append({"name":i["playerPoolEntry"]["player"]["fullName"],
+                                    "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
+                                    "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
+                                    "active": activeSwitch,
+                                    "points": i["playerPoolEntry"]["appliedStatTotal"] ,
+                                    "injured": i["playerPoolEntry"]["player"]["injured"],
+                                    "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
+                                    "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
+                                    "gameTime": "ETA"  , 
+                                    "avgPoints": 0.0 ,
+                                    "inPlay": False })
         print("total "+str(totalHome))
         print()
         print()
+        name1=idToTeamName[d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["away"]["rosterForCurrentScoringPeriod"]["entries"][0]["playerPoolEntry"]["onTeamId"]]
+        print(name1)
+
+        TeamData[name1]={"players":[]}
         totalAway=0
-        print(idToTeamName[d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["away"]["rosterForCurrentScoringPeriod"]["entries"][0]["playerPoolEntry"]["onTeamId"]])
         for i in d["schedule"][(weekNumber-1)*int(len(idToTeamName)/2)+j]["away"]["rosterForCurrentScoringPeriod"]["entries"]:
             print(i["playerPoolEntry"]["player"]["fullName"], end="")
             print("  "+str(i["playerPoolEntry"]["appliedStatTotal"]), end="")
+            activeSwitch=False
             if(i["lineupSlotId"]!=20 and i["lineupSlotId"]!=21):
                 totalAway+=i["playerPoolEntry"]["appliedStatTotal"]
                 print(" active")
+                activeSwitch=True
             else:
                 print()
+            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "\'" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
+                TeamData[name1]["players"].append({"name":i["playerPoolEntry"]["player"]["fullName"],
+                                    "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
+                                    "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
+                                    "active": activeSwitch,
+                                    "points": i["playerPoolEntry"]["appliedStatTotal"] ,
+                                    "injured": i["playerPoolEntry"]["player"]["injured"],
+                                    "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
+                                    "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
+                                    "gameTime": "ETA"  , 
+                                    "avgPoints": 0.0 ,
+                                    "inPlay": False })
         print("total "+str(totalAway))
         print()
         print()
 
 
     #0-11 are nothing prob week data
-    return(d)
+    #return(d)
+    #return free_agent_details["A.J. Brown"]
+    return TeamData
     '''
     mMatchup
     draftDetail-nope
