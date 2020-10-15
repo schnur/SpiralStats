@@ -108,5 +108,7 @@ TeamData:{Teamname1: {players:[{name:???, STR
                                 fantasyteam: ??? int
                                 ?img
                                 gameTime: ???
+                                avgPoints: ??? double
+                                inPlay: ??? bool
                                  },,,,]} ,Teamname2: ...}
 """
