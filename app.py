@@ -112,9 +112,9 @@ def home():
 
 
     #0-11 are nothing prob week data
-    return(d)
+    #return(d)
     #return free_agent_details["A.J. Brown"]
-    #return TeamData
+    return TeamData
     '''
     mMatchup
     draftDetail-nope
