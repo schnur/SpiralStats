@@ -25,7 +25,7 @@ with open('free_agent_details.json', 'r') as free_agent_details_file:
 #         for player in free_agents[position]:
 #             if not (player["name"] in free_agent_details):
 #                 try:
-#                     agent_details = lg.player_details(player["name"])
+#                     agent_details = lg.player_details(player["player_id"])
 #                     free_agent_details[player["name"]] = agent_details[0]
 #                 except RuntimeError:
 #                     print(player["name"], 'was not found.')
@@ -39,7 +39,7 @@ with open('free_agent_details.json', 'r') as free_agent_details_file:
 #         for player in waivers[position]:
 #             if not (player["name"] in free_agent_details):
 #                 try:
-#                     agent_details = lg.player_details(player["name"])
+#                     agent_details = lg.player_details(player["player_id"])
 #                     free_agent_details[player["name"]] = agent_details[0]
 #                 except RuntimeError:
 #                     print(player["name"], 'was not found.')
