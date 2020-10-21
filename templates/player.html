@@ -6,5 +6,10 @@
         <img src="{{ player.headshot.url }}" width=100>
         <h1> Name : {{ player.name.full }} </h1>
         <h1> Team : {{ player.editorial_team_full_name }} </h1>
+        {%  for abb , word in stats_words.items() %}
+            {% if stats[abb] != 0 %}    
+                <h1> {{word}} = {{stats[abb]}}</h1>
+            {% endif %}
+        {% endfor %}
     </body>
 </html>
