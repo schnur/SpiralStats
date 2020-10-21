@@ -35,7 +35,7 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         print("Username :", username)
-        print("Passwprd :", password)
+        print("Password :", password)
         return redirect(url_for('home'))
 
 if __name__ == '__main__':
