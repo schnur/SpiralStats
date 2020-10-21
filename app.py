@@ -15,7 +15,7 @@ with open('free_agent_details.json', 'r') as free_agent_details_file:
     free_agent_details = json.load(free_agent_details_file)
 
 with open('season_stats.json', 'r') as season_stats_file:
-        season_stats = json.load(season_stats_file)
+    season_stats = json.load(season_stats_file)
 
 stats_words = {
     "Pass Yds": 'Passing Yards', 
@@ -41,11 +41,17 @@ def main():
 def players():
     player_name = request.args.get('player_name')
     player = free_agent_details[player_name]
-    stats = season_stats[player_name]
-    if player and stats:
+    if (player_name in season_stats) and player:
+        stats = season_stats[player_name]
         return render_template('player.html', player = player, stats = stats, stats_words = stats_words)
     else:
         return "Player Data Not Found"
+
+@app.route('/compare')
+def Compare():
+    player_1 = request.args.get('player_1')
+    player_2 = request.args.get('player_2')
+    return 'Comparing ' + player_1 + ' and ' + player_2
     
 if __name__ == '__main__':
     app.run()

@@ -13,7 +13,7 @@ lg = gm.to_league('399.l.1201487')
 player_ids = []
 
 with open('season_stats.json', 'r') as season_stats_file:
-        season_stats = json.load(season_stats_file)
+    season_stats = json.load(season_stats_file)
         
 for player in free_agent_details:  
     if not (player in season_stats):
@@ -23,4 +23,3 @@ for player in free_agent_details:
         with open('season_stats.json', 'w') as season_stats_file:
             json.dump(season_stats, season_stats_file)  
     
-

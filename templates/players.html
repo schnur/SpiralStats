@@ -25,9 +25,8 @@
                 <ul>
                     {% for player in waivers[position] %}
                     <li> 
-                        {{ player.name }} - 
                         {% if free_agent_details[player.name] %}
-                            <a href="{{ free_agent_details[player.name].headshot.url }}">Click Here to See Image</a>
+                            <a href="/players?player_name={{ player.name }}"> {{ player.name }} </a>
                         {% else %}
                             Player Data Not Yet Retrieved
                         {% endif %}
