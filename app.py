@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests
 import json
 app=Flask(__name__)
@@ -42,7 +42,6 @@ def home():
     with open('free_agent_details.json', 'r') as free_agent_details_file:
         free_agent_details = json.load(free_agent_details_file)
     
-    
     TeamData={}
 
     for j in range(int(len(idToTeamName)/2)):
@@ -64,7 +63,7 @@ def home():
                 activeSwitch=True
             else:
                 print()
-            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "\'" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
+            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "Antonio Brown" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
                 TeamData[name1]["players"].append({"name":i["playerPoolEntry"]["player"]["fullName"],
                                     "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
                                     "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
@@ -94,7 +93,7 @@ def home():
                 activeSwitch=True
             else:
                 print()
-            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "\'" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
+            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "Antonio Brown" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
                 TeamData[name1]["players"].append({"name":i["playerPoolEntry"]["player"]["fullName"],
                                     "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
                                     "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
@@ -112,9 +111,12 @@ def home():
 
 
     #0-11 are nothing prob week data
+    #r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "kona_player_info"})
+    #d = r.json()
     #return(d)
+    return render_template("matchUp.html", TeamData=TeamData)
     #return free_agent_details["A.J. Brown"]
-    return TeamData
+    #return TeamData
     '''
     mMatchup
     draftDetail-nope
