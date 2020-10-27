@@ -62,19 +62,21 @@ def home():
                 print(" active")
                 activeSwitch=True
             else:
-                print()
-            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "Antonio Brown" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
+                print()          
+            try:
                 TeamData[name1]["players"].append({"name":i["playerPoolEntry"]["player"]["fullName"],
-                                    "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
-                                    "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
-                                    "active": activeSwitch,
-                                    "points": i["playerPoolEntry"]["appliedStatTotal"] ,
-                                    "injured": i["playerPoolEntry"]["player"]["injured"],
-                                    "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
-                                    "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
-                                    "gameTime": "ETA"  , 
-                                    "avgPoints": 0.0 ,
-                                    "inPlay": False })
+                                "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
+                                "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
+                                "active": activeSwitch,
+                                "points": i["playerPoolEntry"]["appliedStatTotal"] ,
+                                "injured": i["playerPoolEntry"]["player"]["injured"],
+                                "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
+                                "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
+                                "gameTime": "ETA"  , 
+                                "avgPoints": 0.0 ,
+                                "inPlay": False })
+            except:
+                print(i["playerPoolEntry"]["player"]["fullName"]+ " missing")
         print("total "+str(totalHome))
         print()
         print()
@@ -93,28 +95,45 @@ def home():
                 activeSwitch=True
             else:
                 print()
-            if("D/ST" not in i["playerPoolEntry"]["player"]["fullName"] and "Antonio Brown" not in i["playerPoolEntry"]["player"]["fullName"] and "." not in i["playerPoolEntry"]["player"]["fullName"]):
-                TeamData[name1]["players"].append({"name":i["playerPoolEntry"]["player"]["fullName"],
-                                    "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
-                                    "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
-                                    "active": activeSwitch,
-                                    "points": i["playerPoolEntry"]["appliedStatTotal"] ,
-                                    "injured": i["playerPoolEntry"]["player"]["injured"],
-                                    "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
-                                    "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
-                                    "gameTime": "ETA"  , 
-                                    "avgPoints": 0.0 ,
-                                    "inPlay": False })
+            try: TeamData[name1]["players"].append({"name":i["playerPoolEntry"]["player"]["fullName"],
+                                "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
+                                "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
+                                "active": activeSwitch,
+                                "points": i["playerPoolEntry"]["appliedStatTotal"] ,
+                                "injured": i["playerPoolEntry"]["player"]["injured"],
+                                "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
+                                "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
+                                "gameTime": "ETA"  , 
+                                "avgPoints": 0.0 ,
+                                "inPlay": False })
+            except:
+                print(i["playerPoolEntry"]["player"]["fullName"]+ " missing")
         print("total "+str(totalAway))
         print()
         print()
 
 
     #0-11 are nothing prob week data
-    #r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "kona_player_info"})
-    #d = r.json()
-    #return(d)
-    return render_template("matchUp.html", TeamData=TeamData)
+    xFilter={"players":{"filterStatus":{"value":["FREEAGENT","WAIVERS"]},"filterSlotIds":{"value":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,23,24]},"filterRanksForScoringPeriodIds":{"value":[7]},"limit":1000,"offset":0,"sortPercOwned":{"sortAsc":False,"sortPriority":1},"sortDraftRanks":{"sortPriority":100,"sortAsc":True,"value":"STANDARD"},"filterRanksForRankTypes":{"value":["PPR"]},"filterRanksForSlotIds":{"value":[0,2,4,6,17,16]},"filterStatsForTopScoringPeriodIds":{"value":2,"additionalValue":["002020","102020","002019","1120207","022020"]}}}
+    headers={"x-fantasy-filter":json.dumps(xFilter)}
+    r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "kona_player_info"},headers=headers)
+    """
+{"players":{"filterStatus":{"value":["FREEAGENT","WAIVERS"]},"filterSlotIds":{"value":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,23,24]},"filterRanksForScoringPeriodIds":{"value":[7]},"limit":50,"offset":100,"sortPercOwned":{"sortAsc":false,"sortPriority":1},"sortDraftRanks":{"sortPriority":100,"sortAsc":true,"value":"STANDARD"},"filterRanksForRankTypes":{"value":["PPR"]},"filterRanksForSlotIds":{"value":[0,2,4,6,17,16]},"filterStatsForTopScoringPeriodIds":{"value":2,"additionalValue":["002020","102020","002019","1120207","022020"]}}}
+
+    """
+    d = r.json()
+    '''c=[]
+    for play in d["players"]:
+        if(play["status"]!="ONTEAM"):
+            c.append(play["player"]["fullName"])
+    print(c)'''
+    #return(d["players"][1]["status"])
+    for i in d["players"]:
+        if(i["status"]!="ONTEAM"):
+            print(i["player"]["fullName"]+" ", end="")
+            print(i["player"]["stats"][0]["appliedTotal"])
+    return(d)
+    #return render_template("matchUp.html", TeamData=TeamData)
     #return free_agent_details["A.J. Brown"]
     #return TeamData
     '''
