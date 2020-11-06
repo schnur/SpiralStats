@@ -1,10 +1,7 @@
 from flask import Flask
-from bs4 import BeautifulSoup
 import requests
 import json
 app=Flask(__name__)
-
-# Everyone should put "pip install beautifulsoup4" in your terminal
 
 @app.route("/")
 def home():
@@ -25,13 +22,12 @@ def home():
     #mTeam what moves were made
     #mRoster news
     #mBoxscore complex but maybe can get the data from here
-    reqforcookie = requests.get(url)
-    soup = BeautifulSoup(reqforcookie.text, "html.parser")
     #print(soup)
 
     #general league info
-    r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie})
-   
+    #r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie})
+    r= requests.get("https://registerdisney.go.com/jgc/v6/client/ESPN-ONESITE.WEB-PROD/guest/login?langPref=en-US", params={"loginValue":"carcrash3000@gmail.com", "password":"Colton_password2"})
+    
     d = r.json()
     
     weekNumber=int(d["scoringPeriodId"]) #what week
