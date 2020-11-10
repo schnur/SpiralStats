@@ -114,26 +114,14 @@ def home():
 
 
     #0-11 are nothing prob week data
-    xFilter={"players":{"filterStatus":{"value":["FREEAGENT","WAIVERS"]},"filterSlotIds":{"value":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,23,24]},"filterRanksForScoringPeriodIds":{"value":[7]},"limit":1000,"offset":0,"sortPercOwned":{"sortAsc":False,"sortPriority":1},"sortDraftRanks":{"sortPriority":100,"sortAsc":True,"value":"STANDARD"},"filterRanksForRankTypes":{"value":["PPR"]},"filterRanksForSlotIds":{"value":[0,2,4,6,17,16]},"filterStatsForTopScoringPeriodIds":{"value":2,"additionalValue":["002020","102020","002019","1120207","022020"]}}}
-    headers={"x-fantasy-filter":json.dumps(xFilter)}
-    r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "kona_player_info"},headers=headers)
+
     """
 {"players":{"filterStatus":{"value":["FREEAGENT","WAIVERS"]},"filterSlotIds":{"value":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,23,24]},"filterRanksForScoringPeriodIds":{"value":[7]},"limit":50,"offset":100,"sortPercOwned":{"sortAsc":false,"sortPriority":1},"sortDraftRanks":{"sortPriority":100,"sortAsc":true,"value":"STANDARD"},"filterRanksForRankTypes":{"value":["PPR"]},"filterRanksForSlotIds":{"value":[0,2,4,6,17,16]},"filterStatsForTopScoringPeriodIds":{"value":2,"additionalValue":["002020","102020","002019","1120207","022020"]}}}
 
     """
-    d = r.json()
-    '''c=[]
-    for play in d["players"]:
-        if(play["status"]!="ONTEAM"):
-            c.append(play["player"]["fullName"])
-    print(c)'''
-    #return(d["players"][1]["status"])
-    for i in d["players"]:
-        if(i["status"]!="ONTEAM"):
-            print(i["player"]["fullName"]+" ", end="")
-            print(i["player"]["stats"][0]["appliedTotal"])
-    return(d)
-    #return render_template("matchUp.html", TeamData=TeamData)
+
+    #return(d)
+    return render_template("matchUp.html", TeamData=TeamData)
     #return free_agent_details["A.J. Brown"]
     #return TeamData
     '''
@@ -149,24 +137,134 @@ def home():
     teams
     '''
 
+@app.route("/UltTeam")
+def UltTeam():
+    leagueID="21251"
+    seasonID="2020"
+    swid_cookie="{5219793E-A1E1-409D-B4F6-4553002DE3C5}"
+    espn2_cookie= "AECFdZN2ME9jC0RpPvn0iFSucTA6zC2Aci1594ItlyXeW7OarK8YC1p2qWoATmAVYklBskhYNcfrAc%2FCeVsB7T2wesET%2BYRZfOE7e9mJeQJoXNzdZsGjMfJ13pN1uRMnhYT%2FWrWkdWY%2F7GX9HiO%2BWzDHiAF8zLhB68PyvqN0LjzeFtZYhBbOfDNMsyi4rUVXZGjdq%2FqxpjbJF%2F4Sj1Y0dUJ2bW6NInbZem2HoEGYKHpK8gV5hSbZjNFAUTg3L4hqqNQijChIF7Rd0PF4Ogrh0b1q"
 
-  
-  #what we need for each player
-    #name, points, team/
+    url="https://fantasy.espn.com/apis/v3/games/ffl/seasons/"+seasonID+"/segments/0/leagues/"+leagueID
 
-  #jobs
-  #espn data-ryan
-  #nfl data-Arya
-  # dream team -shamar
-  # find out how to use cookies -colton
-  
-  # testing testing
-"""
-Ryan
+    xFilter={"players":{"filterStatus":{"value":["FREEAGENT","WAIVERS","ONTEAM"]},"filterSlotIds":{"value":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,23,24]},"filterRanksForScoringPeriodIds":{"value":[7]},"limit":1000,"offset":0,"sortPercOwned":{"sortAsc":False,"sortPriority":1},"sortDraftRanks":{"sortPriority":100,"sortAsc":True,"value":"STANDARD"},"filterRanksForRankTypes":{"value":["PPR"]},"filterRanksForSlotIds":{"value":[0,2,4,6,17,16]},"filterStatsForTopScoringPeriodIds":{"value":2,"additionalValue":["002020","102020","002019","1120207","022020"]}}}
+    headers={"x-fantasy-filter":json.dumps(xFilter)}
+    r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie}, params={"view": "kona_player_info"},headers=headers)
+    d = r.json()
+    topQBName=""
+    topQBNum=-1
+    topWRName=""
+    topWRNum=-1
+    topWRName2=""
+    topWRNum2=-1
+    topWRName3=""
+    topWRNum3=-1
+    
+    topRBName=""
+    topRBNum=-1
+    topRBName2=""
+    topRBNum2=-1
+    topRBName3=""
+    topRBNum3=-1
 
-"""
+    topTEName=""
+    topTENum=-1
+    topTEName2=""
+    topTENum2=-1
 
-"""
-Comment - Shamar
-"""
-#hello guys -Arya
+    topKName=""
+    topKNum=-1
+
+    topDName=""
+    topDNum=-1
+
+
+    for i in d["players"]:
+        print(i["player"]["fullName"]+" ", end="")
+        print(str(round(i["player"]["stats"][0]["appliedTotal"],2))+" ")
+        if(i["player"]["defaultPositionId"]==1):
+            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topQBNum):
+                topQBNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topQBName=i["player"]["fullName"]
+
+        
+        if(i["player"]["defaultPositionId"]==2):
+            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topRBNum):
+                topRBName3=topRBName2
+                topRBNum3=topRBNum2
+                topRBName2=topRBName
+                topRBNum2=topRBNum
+                topRBNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topRBName=i["player"]["fullName"]
+            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topRBNum2):
+                topRBName3=topRBName2
+                topRBNum3=topRBNum2
+                topRBNum2=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topRBName2=i["player"]["fullName"]
+            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topRBNum3):
+                topRBNum3=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topRBName3=i["player"]["fullName"]
+
+        if(i["player"]["defaultPositionId"]==3 and i["player"]["fullName"]!=topWRName and i["player"]["fullName"]!=topWRName2 and i["player"]["fullName"]!=topWRName3 ):
+            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topWRNum):
+                topWRName3=topWRName2
+                topWRNum3=topWRNum2
+                topWRName2=topWRName
+                topWRNum2=topWRNum
+                topWRNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topWRName=i["player"]["fullName"]
+            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topWRNum2):
+                topWRName3=topWRName2
+                topWRNum3=topWRNum2
+                topWRNum2=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topWRName2=i["player"]["fullName"]
+            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topWRNum3):
+                topWRNum3=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topWRName3=i["player"]["fullName"]
+
+        if(i["player"]["defaultPositionId"]==4):
+            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topTENum):
+                topTEName2=topTEName
+                topTENum2=topTENum
+                topTENum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topTEName=i["player"]["fullName"]
+            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topTENum2):
+                topTENum2=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topTEName2=i["player"]["fullName"]
+
+        if(i["player"]["defaultPositionId"]==5):
+            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topKNum):
+                topKNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topKName=i["player"]["fullName"]
+        if(i["player"]["defaultPositionId"]==16):
+            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topDNum):
+                topDNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topDName=i["player"]["fullName"]
+            
+
+    print()
+    print("QB: "+topQBName+" "+str(topQBNum))
+    print("RB1: "+topRBName+" "+str(topRBNum))
+    print("RB2: "+topRBName2+" "+str(topRBNum2))
+    #print("RB3: "+topRBName3+" "+str(topRBNum3))
+    print("WR1: "+topWRName+" "+str(topWRNum))
+    print("WR2: "+topWRName2+" "+str(topWRNum2))
+    #print("WR3: "+topWRName3+" "+str(topWRNum3))
+
+    print("TE1: "+topTEName+" "+str(topTENum))
+    #print("TE2: "+topTEName2+" "+str(topTENum2))
+
+    topFLEXName=topRBName3
+    topFLEXNum=topRBNum3
+
+    if(topFLEXNum<topWRNum3):
+        topFLEXName=topWRName3
+        topFLEXNum=topWRNum3
+    if(topFLEXNum<topTENum2):
+        topFLEXName=topTEName2
+        topFLEXNum=topTENum2
+
+    print("FLEX: "+topFLEXName+" "+str(topFLEXNum))
+
+    print("D: "+topDName+" "+str(topDNum))
+    print("K: "+topKName+" "+str(topKNum))
+    return(d)
