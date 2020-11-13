@@ -23,10 +23,12 @@ def home():
     #mRoster news
     #mBoxscore complex but maybe can get the data from here
     #print(soup)
-
+    
+    username = raw_input("Type your username: ")
+    password = raw_input("Type your password: ")
     #general league info
     #r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie})
-    r= requests.get("https://registerdisney.go.com/jgc/v6/client/ESPN-ONESITE.WEB-PROD/guest/login?langPref=en-US", params={"loginValue":"carcrash3000@gmail.com", "password":"Colton_password2"})
+    r= requests.get("https://registerdisney.go.com/jgc/v6/client/ESPN-ONESITE.WEB-PROD/guest/login?langPref=en-US", params={"loginValue":username, "password":password})
     
     d = r.json()
     
