@@ -139,6 +139,7 @@ def home():
 
 @app.route("/UltTeam")
 def UltTeam():
+    #fix players on byes still retain points
     leagueID="21251"
     seasonID="2020"
     swid_cookie="{5219793E-A1E1-409D-B4F6-4553002DE3C5}"
@@ -179,8 +180,9 @@ def UltTeam():
 
 
     for i in d["players"]:
-        print(i["player"]["fullName"]+" ", end="")
-        print(str(round(i["player"]["stats"][0]["appliedTotal"],2))+" ")
+
+        #print(i["player"]["fullName"]+" ", end="")
+        #print(str(round(i["player"]["stats"][0]["appliedTotal"],2))+" ")
         if(i["player"]["defaultPositionId"]==1):
             if(round(i["player"]["stats"][0]["appliedTotal"],2)>topQBNum):
                 topQBNum=round(i["player"]["stats"][0]["appliedTotal"],2)
@@ -267,4 +269,20 @@ def UltTeam():
 
     print("D: "+topDName+" "+str(topDNum))
     print("K: "+topKName+" "+str(topKNum))
-    return(d)
+    with open('free_agent_details.json', 'r') as free_agent_details_file:
+        free_agent_details = json.load(free_agent_details_file)
+    #qbpic=free_agent_details[topQBName]["image_url"]
+    pics=[]
+    pics.append(free_agent_details[topQBName]["image_url"])
+    pics.append(free_agent_details[topRBName]["image_url"])
+    pics.append(free_agent_details[topRBName2]["image_url"])
+    pics.append(free_agent_details[topWRName]["image_url"])
+    pics.append(free_agent_details[topWRName2]["image_url"])
+    pics.append(free_agent_details[topFLEXName]["image_url"])
+    pics.append(free_agent_details[topTEName]["image_url"])
+    #pics.append(free_agent_details[topDName]["image_url"])
+    pics.append(free_agent_details[topKName]["image_url"])
+    #return(d)
+    return render_template("ultTeam.html", topQBName=topQBName,topQBNum=topQBNum,topRBName=topRBName, topRBNum=topRBNum, topRBName2=topRBName2,topRBNum2=topRBNum2,
+    topWRName=topWRName, topWRNum=topWRNum, topWRName2=topWRName2, topWRNum2=topWRNum2, topTEName=topTEName, topTENum=topTENum, topFLEXName=topFLEXName,
+    topFLEXNum=topFLEXNum, topDName=topDName, topDNum=topDNum, topKName=topKName, topKNum=topKNum,pics=pics )
