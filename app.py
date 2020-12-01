@@ -23,9 +23,13 @@ def home():
     #mRoster news
     #mBoxscore complex but maybe can get the data from here
 
-
-    #general league info
-    r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie})
+    #login with username and password
+    username = raw_input("Type your username: ")
+    password = raw_input("Type your password: ")
+    r= requests.get("https://registerdisney.go.com/jgc/v6/client/ESPN-ONESITE.WEB-PROD/guest/login?langPref=en-US", params={"loginValue":username, "password":password})
+    
+    #old login with cookies
+    #r=requests.get(url,cookies={"swid": swid_cookie,"espn_s2": espn2_cookie})
    
     d = r.json()
     
