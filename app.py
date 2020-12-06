@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import requests
+import math
 import json
 app=Flask(__name__)
 
@@ -68,7 +69,7 @@ def home():
                                 "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
                                 "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
                                 "active": activeSwitch,
-                                "points": i["playerPoolEntry"]["appliedStatTotal"] ,
+                                "points": math.trunc(i["playerPoolEntry"]["appliedStatTotal"]*100)/100 ,
                                 "injured": i["playerPoolEntry"]["player"]["injured"],
                                 "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
                                 "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
@@ -99,7 +100,7 @@ def home():
                                 "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
                                 "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
                                 "active": activeSwitch,
-                                "points": i["playerPoolEntry"]["appliedStatTotal"] ,
+                                "points": math.trunc(i["playerPoolEntry"]["appliedStatTotal"]*100)/100 ,
                                 "injured": i["playerPoolEntry"]["player"]["injured"],
                                 "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
                                 "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
@@ -184,75 +185,75 @@ def UltTeam():
         #print(i["player"]["fullName"]+" ", end="")
         #print(str(round(i["player"]["stats"][0]["appliedTotal"],2))+" ")
         if(i["player"]["defaultPositionId"]==1):
-            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topQBNum):
-                topQBNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+            if(i["player"]["stats"][0]["appliedTotal"]>topQBNum):
+                topQBNum=i["player"]["stats"][0]["appliedTotal"]
                 topQBName=i["player"]["fullName"]
 
         
         if(i["player"]["defaultPositionId"]==2):
-            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topRBNum):
+            if(i["player"]["stats"][0]["appliedTotal"]>topRBNum):
                 topRBName3=topRBName2
                 topRBNum3=topRBNum2
                 topRBName2=topRBName
                 topRBNum2=topRBNum
-                topRBNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topRBNum=i["player"]["stats"][0]["appliedTotal"]
                 topRBName=i["player"]["fullName"]
-            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topRBNum2):
+            elif(i["player"]["stats"][0]["appliedTotal"]>topRBNum2):
                 topRBName3=topRBName2
                 topRBNum3=topRBNum2
-                topRBNum2=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topRBNum2=i["player"]["stats"][0]["appliedTotal"]
                 topRBName2=i["player"]["fullName"]
-            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topRBNum3):
-                topRBNum3=round(i["player"]["stats"][0]["appliedTotal"],2)
+            elif(i["player"]["stats"][0]["appliedTotal"]>topRBNum3):
+                topRBNum3=i["player"]["stats"][0]["appliedTotal"]
                 topRBName3=i["player"]["fullName"]
 
         if(i["player"]["defaultPositionId"]==3 and i["player"]["fullName"]!=topWRName and i["player"]["fullName"]!=topWRName2 and i["player"]["fullName"]!=topWRName3 ):
-            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topWRNum):
+            if(i["player"]["stats"][0]["appliedTotal"]>topWRNum):
                 topWRName3=topWRName2
                 topWRNum3=topWRNum2
                 topWRName2=topWRName
                 topWRNum2=topWRNum
-                topWRNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topWRNum=i["player"]["stats"][0]["appliedTotal"]
                 topWRName=i["player"]["fullName"]
-            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topWRNum2):
+            elif(i["player"]["stats"][0]["appliedTotal"]>topWRNum2):
                 topWRName3=topWRName2
                 topWRNum3=topWRNum2
-                topWRNum2=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topWRNum2=i["player"]["stats"][0]["appliedTotal"]
                 topWRName2=i["player"]["fullName"]
-            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topWRNum3):
-                topWRNum3=round(i["player"]["stats"][0]["appliedTotal"],2)
+            elif(i["player"]["stats"][0]["appliedTotal"]>topWRNum3):
+                topWRNum3=i["player"]["stats"][0]["appliedTotal"]
                 topWRName3=i["player"]["fullName"]
 
         if(i["player"]["defaultPositionId"]==4):
-            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topTENum):
+            if(i["player"]["stats"][0]["appliedTotal"]>topTENum):
                 topTEName2=topTEName
                 topTENum2=topTENum
-                topTENum=round(i["player"]["stats"][0]["appliedTotal"],2)
+                topTENum=i["player"]["stats"][0]["appliedTotal"]
                 topTEName=i["player"]["fullName"]
-            elif(round(i["player"]["stats"][0]["appliedTotal"],2)>topTENum2):
-                topTENum2=round(i["player"]["stats"][0]["appliedTotal"],2)
+            elif(i["player"]["stats"][0]["appliedTotal"]>topTENum2):
+                topTENum2=i["player"]["stats"][0]["appliedTotal"]
                 topTEName2=i["player"]["fullName"]
 
         if(i["player"]["defaultPositionId"]==5):
-            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topKNum):
-                topKNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+            if(i["player"]["stats"][0]["appliedTotal"]>topKNum):
+                topKNum=i["player"]["stats"][0]["appliedTotal"]
                 topKName=i["player"]["fullName"]
         if(i["player"]["defaultPositionId"]==16):
-            if(round(i["player"]["stats"][0]["appliedTotal"],2)>topDNum):
-                topDNum=round(i["player"]["stats"][0]["appliedTotal"],2)
+            if(i["player"]["stats"][0]["appliedTotal"]>topDNum):
+                topDNum=i["player"]["stats"][0]["appliedTotal"]
                 topDName=i["player"]["fullName"]
             
 
     print()
-    print("QB: "+topQBName+" "+str(topQBNum))
-    print("RB1: "+topRBName+" "+str(topRBNum))
-    print("RB2: "+topRBName2+" "+str(topRBNum2))
+    print("QB: "+topQBName+" "+str(math.trunc(topQBNum*100)/100))
+    print("RB1: "+topRBName+" "+str(math.trunc(topRBNum*100)/100))
+    print("RB2: "+topRBName2+" "+str(math.trunc(topRBNum2*100)/100))
     #print("RB3: "+topRBName3+" "+str(topRBNum3))
-    print("WR1: "+topWRName+" "+str(topWRNum))
-    print("WR2: "+topWRName2+" "+str(topWRNum2))
+    print("WR1: "+topWRName+" "+str(math.trunc(topWRNum*100)/100))
+    print("WR2: "+topWRName2+" "+str(math.trunc(topWRNum2*100)/100))
     #print("WR3: "+topWRName3+" "+str(topWRNum3))
 
-    print("TE1: "+topTEName+" "+str(topTENum))
+    print("TE1: "+topTEName+" "+str(math.trunc(topTENum*100)/100))
     #print("TE2: "+topTEName2+" "+str(topTENum2))
 
     topFLEXName=topRBName3
@@ -265,10 +266,10 @@ def UltTeam():
         topFLEXName=topTEName2
         topFLEXNum=topTENum2
 
-    print("FLEX: "+topFLEXName+" "+str(topFLEXNum))
+    print("FLEX: "+topFLEXName+" "+str(math.trunc(topFLEXNum*100)/100))
 
-    print("D: "+topDName+" "+str(topDNum))
-    print("K: "+topKName+" "+str(topKNum))
+    print("D: "+topDName+" "+str(math.trunc(topDNum*100)/100))
+    print("K: "+topKName+" "+str(math.trunc(topKNum*100)/100))
     with open('free_agent_details.json', 'r') as free_agent_details_file:
         free_agent_details = json.load(free_agent_details_file)
     #qbpic=free_agent_details[topQBName]["image_url"]
@@ -283,6 +284,6 @@ def UltTeam():
     #pics.append(free_agent_details[topDName]["image_url"])
     pics.append(free_agent_details[topKName]["image_url"])
     #return(d)
-    return render_template("ultTeam.html", topQBName=topQBName,topQBNum=topQBNum,topRBName=topRBName, topRBNum=topRBNum, topRBName2=topRBName2,topRBNum2=topRBNum2,
-    topWRName=topWRName, topWRNum=topWRNum, topWRName2=topWRName2, topWRNum2=topWRNum2, topTEName=topTEName, topTENum=topTENum, topFLEXName=topFLEXName,
-    topFLEXNum=topFLEXNum, topDName=topDName, topDNum=topDNum, topKName=topKName, topKNum=topKNum,pics=pics )
+    return render_template("ultTeam.html", topQBName=topQBName,topQBNum=(math.trunc(topQBNum*100)/100),topRBName=topRBName, topRBNum=(math.trunc(topRBNum*100)/100), topRBName2=topRBName2,topRBNum2=(math.trunc(topRBNum2*100)/100),
+    topWRName=topWRName, topWRNum=(math.trunc(topWRNum*100)/100), topWRName2=topWRName2, topWRNum2=(math.trunc(topWRNum2*100)/100), topTEName=topTEName, topTENum=(math.trunc(topTENum*100)/100), topFLEXName=topFLEXName,
+    topFLEXNum=(math.trunc(topFLEXNum*100)/100), topDName=topDName, topDNum=(math.trunc(topDNum*100)/100), topKName=topKName, topKNum=(math.trunc(topKNum*100)/100),pics=pics )
