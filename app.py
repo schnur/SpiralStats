@@ -69,7 +69,7 @@ def home():
                                 "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
                                 "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
                                 "active": activeSwitch,
-                                "points": math.trunc(i["playerPoolEntry"]["appliedStatTotal"]*100)/100 ,
+                                "points": math.trunc(i["playerPoolEntry"]["appliedStatTotal"]*1000)/1000 ,
                                 "injured": i["playerPoolEntry"]["player"]["injured"],
                                 "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
                                 "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
@@ -100,7 +100,7 @@ def home():
                                 "proTeam": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["editorial_team_full_name"] ,
                                 "position": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["primary_position"] , 
                                 "active": activeSwitch,
-                                "points": math.trunc(i["playerPoolEntry"]["appliedStatTotal"]*100)/100 ,
+                                "points": math.trunc(i["playerPoolEntry"]["appliedStatTotal"]*1000)/1000 ,
                                 "injured": i["playerPoolEntry"]["player"]["injured"],
                                 "fantasyteam": i["playerPoolEntry"]["onTeamId"] , 
                                 "img_url": free_agent_details[i["playerPoolEntry"]["player"]["fullName"]]["image_url"] ,
@@ -284,6 +284,6 @@ def UltTeam():
     #pics.append(free_agent_details[topDName]["image_url"])
     pics.append(free_agent_details[topKName]["image_url"])
     #return(d)
-    return render_template("ultTeam.html", topQBName=topQBName,topQBNum=(math.trunc(topQBNum*100)/100),topRBName=topRBName, topRBNum=(math.trunc(topRBNum*100)/100), topRBName2=topRBName2,topRBNum2=(math.trunc(topRBNum2*100)/100),
-    topWRName=topWRName, topWRNum=(math.trunc(topWRNum*100)/100), topWRName2=topWRName2, topWRNum2=(math.trunc(topWRNum2*100)/100), topTEName=topTEName, topTENum=(math.trunc(topTENum*100)/100), topFLEXName=topFLEXName,
-    topFLEXNum=(math.trunc(topFLEXNum*100)/100), topDName=topDName, topDNum=(math.trunc(topDNum*100)/100), topKName=topKName, topKNum=(math.trunc(topKNum*100)/100),pics=pics )
+    return render_template("ultTeam.html", topQBName=topQBName,topQBNum=(math.trunc(topQBNum*1000)/1000),topRBName=topRBName, topRBNum=(math.trunc(topRBNum*1000)/1000), topRBName2=topRBName2,topRBNum2=(math.trunc(topRBNum2*1000)/1000),
+    topWRName=topWRName, topWRNum=(math.trunc(topWRNum*1000)/1000), topWRName2=topWRName2, topWRNum2=(math.trunc(topWRNum2*1000)/1000), topTEName=topTEName, topTENum=(math.trunc(topTENum*1000)/1000), topFLEXName=topFLEXName,
+    topFLEXNum=(math.trunc(topFLEXNum*1000)/1000), topDName=topDName, topDNum=(math.trunc(topDNum*1000)/1000), topKName=topKName, topKNum=(math.trunc(topKNum*1000)/1000),pics=pics )
